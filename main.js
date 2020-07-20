@@ -103,7 +103,7 @@ function appendElement(divId, el) {
 }
 
 function generateSubmitButton(n) {
-    return `<button id="ok_${n}" class="btn custom-button">Submit</button>`;
+    return `<button id="ok" class="btn custom-button">Submit</button>`;
 }
 
 function generateImg(src) {
