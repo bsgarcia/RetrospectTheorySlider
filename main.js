@@ -15,9 +15,9 @@ function main() {
 
     // generate html
     let sliderHTML = SliderManager.generateSlider({ text: question,
-        min: -90, max: 90, step: 10, initValue: initValue, n: 1, percent: false});
+        min: -90, max: 90, step: 10, initValue: initValue});
 
-    let buttonHTML = generateSubmitButton(1);
+    let buttonHTML = generateSubmitButton();
     let imgHTML = generateImg('img/index.png')
     let questionHTML = generateQuestion(question);
 
@@ -45,16 +45,16 @@ class SliderManager {
 
     static generateSlider({
                               min = 0, max = 100, step = 5,
-                              initValue = 0, percent = true,
-                              n = 1, classname = 'slider'
+                              initValue = 0,
+                              classname = 'slider'
                           } = {}) {
         let slider = `<main style="flex-basis: 100%">
-            <form id="form_${n}" class="${classname}">
+            <form id="form" class="${classname}">
             <div class="range">
-            <input id="slider_${n}" name="range" type="range" value="${initValue}" min="${min}" max="${max}" step="${step}">
+            <input id="slider" name="range" type="range" value="${initValue}" min="${min}" max="${max}" step="${step}">
             <div class="range-output">
-            <output id="output_${n}" class="output" name="output" for="range">
-            ${initValue + ['', '%'][+(percent)]}
+            <output id="output" class="output" name="output" for="range">
+            ${initValue}
              </output>
              </div>
              </div>
@@ -65,22 +65,21 @@ class SliderManager {
     }
 
 
-    static listenOnSlider(clickArgs, clickFunc, percent = false, n = 1) {
+    static listenOnSlider(clickArgs, clickFunc) {
 
         rangeInputRun();
 
-        let slider = $('#slider_' + n);
-        let output = document.getElementById('output_' + n);
-        let form = document.getElementById('form_' + n);
+        let slider = $('#slider');
+        let output = document.getElementById('output');
+        let form = document.getElementById('form');
 
         form.oninput = function () {
             output.value = slider.val();
-            output.innerHTML += ['', "%"][+(percent)];
         };
 
         clickArgs.slider = slider;
 
-        let ok = $('#ok_' + n);
+        let ok = $('#ok');
         ok.click(clickArgs, clickFunc);
     }
 
