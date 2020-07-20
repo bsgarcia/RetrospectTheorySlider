@@ -15,7 +15,7 @@ function main() {
 
     // generate html
     let sliderHTML = SliderManager.generateSlider({ text: question,
-        min: -90, max: 90, step: 10, initValue: initValue});
+        min: min, max: max, step: step, initValue: initValue});
 
     let buttonHTML = generateSubmitButton();
     let imgHTML = generateImg('img/index.png')
