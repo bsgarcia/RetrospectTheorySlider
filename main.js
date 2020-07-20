@@ -3,16 +3,29 @@ $(document).ready(main);
 
 
 function main() {
-    let initValue = range(25, 75, 5)[Math.floor(Math.random() * 10)];
+
+    // params
+    let min = -90;
+    let max = 90;
+    let step = 5;
+    let question = 'What was the average value of this symbol?'
+
+    let initValue = range(-60, 60, 10)[Math.floor(Math.random() * 10)];
     let clickEnabled = true;
+
     // generate html
-    let sliderHTML = SliderManager.generateSlider({min: 0, max: 100, step: 5, initValue: initValue, n: 1});
-    let buttonHTML = SliderManager.generateSubmitButton(1);
-    let imgHTML = SliderManager.generateImg('img/index.png')
+    let sliderHTML = SliderManager.generateSlider({ text: question,
+        min: -90, max: 90, step: 10, initValue: initValue, n: 1, percent: false});
+
+    let buttonHTML = generateSubmitButton(1);
+    let imgHTML = generateImg('img/index.png')
+    let questionHTML = generateQuestion(question);
+
     // insert in html
-    SliderManager.displayImg('Stage', imgHTML);
-    SliderManager.displaySlider('Stage', sliderHTML);
-    SliderManager.displaySubmitButton('GameButton', buttonHTML);
+    appendElement('Stage', questionHTML);
+    appendElement('Stage', imgHTML);
+    appendElement('Stage', sliderHTML);
+    appendElement('GameButton', buttonHTML);
 
     // listen on events
     SliderManager.listenOnSlider({}, function (event) {
@@ -29,18 +42,6 @@ function main() {
 class SliderManager {
     // class using static functions (i.e. each func can be extracted
     // from the class directly, there are no public members) to manage the slider
-
-    static displayImg(divId, img) {
-        $(`#${divId}`).append(img);
-    }
-
-    static displaySlider(divId, slider) {
-        $(`#${divId}`).append(slider);
-    }
-
-    static displaySubmitButton(divId, button) {
-        $(`#${divId}`).html(button);
-    }
 
     static generateSlider({
                               min = 0, max = 100, step = 5,
@@ -63,16 +64,8 @@ class SliderManager {
         return slider;
     }
 
-    static generateSubmitButton(n) {
-        return `<button id="ok_${n}" class="btn custom-button">Submit</button>`;
-    }
 
-    static generateImg(src) {
-       return  `<img class="border rounded stim"
-                style="width: 100%; height: auto; max-width:200px;" src="${src}">`;
-    }
-
-    static listenOnSlider(clickArgs, clickFunc, percent = true, n = 1) {
+    static listenOnSlider(clickArgs, clickFunc, percent = false, n = 1) {
 
         rangeInputRun();
 
@@ -103,4 +96,22 @@ function range(start, stop, step) {
         a.push(b += step || 1);
     }
     return a;
+}
+
+//append to div
+function appendElement(divId, el) {
+    $(`#${divId}`).append(el);
+}
+
+function generateSubmitButton(n) {
+    return `<button id="ok_${n}" class="btn custom-button">Submit</button>`;
+}
+
+function generateImg(src) {
+    return  `<img class="border rounded stim"
+                style="width: 100%; height: auto; max-width:200px;" src="${src}">`;
+}
+
+function generateQuestion(question) {
+    return `<h5 class="justify-content-center">What was the average value of this symbol?</h5>`;
 }
