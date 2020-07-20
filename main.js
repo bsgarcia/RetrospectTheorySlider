@@ -108,8 +108,7 @@ function generateSubmitButton(n) {
 }
 
 function generateImg(src) {
-    return  `<img class="border rounded stim"
-                style="width: 100%; height: auto; max-width:200px;" src="${src}">`;
+    return  `<img class="border rounded stim" src="${src}">`;
 }
 
 function generateQuestion(question) {
