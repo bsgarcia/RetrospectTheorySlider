@@ -10,7 +10,7 @@ function main() {
     let step = 5;
     let question = 'What was the average value of this symbol?'
 
-    let initValue = range(-60, 60, 10)[Math.floor(Math.random() * 10)];
+    let initValue = range(-60, 60, 1)[Math.floor(Math.random() * 10)];
     let clickEnabled = true;
 
     // generate html
