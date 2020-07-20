@@ -7,7 +7,7 @@ function main() {
     // params
     let min = -90;
     let max = 90;
-    let step = 5;
+    let step = 1;
     let question = 'What was the average value of this symbol?'
 
     let initValue = range(-60, 60, 1)[Math.floor(Math.random() * 10)];
