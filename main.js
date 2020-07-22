@@ -7,7 +7,7 @@ function main() {
     // params
     let min = -90;
     let max = 90;
-    let step = 1;
+    let step = .5;
     let question = 'What was the average value of this symbol?'
 
     let initValue = range(-60, 60, 1)[Math.floor(Math.random() * 10)];
@@ -28,7 +28,7 @@ function main() {
     appendElement('GameButton', buttonHTML);
 
     // listen on events
-    SliderManager.listenOnSlider({}, function (event) {
+    let slider = SliderManager.listenOnSlider({}, function (event) {
         if (clickEnabled) {
             // they can click only once
             // clickEnabled = false;
@@ -36,6 +36,9 @@ function main() {
             SliderManager.clickEvent(choice);
         }
     });
+
+    // allows to change value using left and right arrows
+    SliderManager.listenOnArrowKeys(slider);
 }
 
 
@@ -63,12 +66,30 @@ class SliderManager {
 
         return slider;
     }
+    static listenOnArrowKeys(sliderObj) {
+        document.onkeydown = checkKey;
 
+        function checkKey(e) {
 
+            let value = parseFloat(sliderObj.val());
+            let step = parseFloat(sliderObj.attr('step'));
+
+            e = e || window.event;
+
+            if (e.keyCode == '37') {
+                // left arrow
+                sliderObj.val(value - step).change();
+            }
+            else if (e.keyCode == '39') {
+                // right arrow
+                sliderObj.val(value + step).change();
+            }
+
+        }
+    }
     static listenOnSlider(clickArgs, clickFunc) {
 
         rangeInputRun();
-
         let slider = $('#slider');
         let output = document.getElementById('output');
         let form = document.getElementById('form');
@@ -81,6 +102,8 @@ class SliderManager {
 
         let ok = $('#ok');
         ok.click(clickArgs, clickFunc);
+
+        return slider
     }
 
     static clickEvent(choice) {
