@@ -28,7 +28,7 @@ function main() {
     appendElement('GameButton', buttonHTML);
 
     // listen on events
-    let slider = SliderManager.listenOnSlider({}, function (event) {
+    SliderManager.listenOnSlider({}, function (event) {
         if (clickEnabled) {
             // they can click only once
             // clickEnabled = false;
@@ -38,7 +38,7 @@ function main() {
     });
 
     // allows to change value using left and right arrows
-    SliderManager.listenOnArrowKeys(slider);
+    SliderManager.listenOnArrowKeys();
 }
 
 
@@ -66,10 +66,11 @@ class SliderManager {
 
         return slider;
     }
-    static listenOnArrowKeys(sliderObj) {
+    static listenOnArrowKeys() {
         document.onkeydown = checkKey;
 
         function checkKey(e) {
+            let sliderObj = $('#slider');
 
             let value = parseFloat(sliderObj.val());
             let step = parseFloat(sliderObj.attr('step'));
